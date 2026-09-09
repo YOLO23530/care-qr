@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>社区特殊人员关怀信息卡</title>
+<style>
+  /* ===== 基础 ===== */
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+    background:#f5f1ea; color:#2b2118; line-height:1.6;
+  }
+  .wrap { max-width:560px; margin:0 auto; padding:0 0 40px; }
+
+  /* ===== 顶部 ===== */
+  .topbar {
+    background:linear-gradient(135deg,#e8532f 0%,#c9361a 100%);
+    color:#fff; padding:22px 20px 26px; position:relative; overflow:hidden;
+  }
+  .topbar::after{
+    content:""; position:absolute; right:-40px; top:-40px; width:180px; height:180px;
+    border-radius:50%; background:rgba(255,255,255,.08);
+  }
+  .badge{
+    display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.4); border-radius:999px; padding:4px 12px;
+    font-size:12px; letter-spacing:1px; margin-bottom:14px;
+  }
+  .badge svg{ width:14px; height:14px; }
+  .topbar h1{ font-size:24px; font-weight:800; letter-spacing:2px; }
+  .topbar .sub{ font-size:13px; opacity:.92; margin-top:6px; }
+
+  /* ===== 卡片通用 ===== */
+  .card{
+    background:#fff; border-radius:16px; margin:14px 14px 0; padding:18px;
+    box-shadow:0 2px 10px rgba(80,45,20,.06); border:1px solid rgba(80,45,20,.08);
+  }
+  .card h2{
+    font-size:15px; font-weight:700; display:flex; align-items:center; gap:8px;
+    color:#c9361a; margin-bottom:12px;
+  }
+  .card h2 svg{ width:18px; height:18px; flex:none; }
+  .card .h2line{ flex:1; height:1px; background:#f0e4d6; }
+
+  /* ===== 人物信息 ===== */
+  .person{ display:flex; gap:14px; align-items:center; }
+  .avatar{
+    width:84px; height:84px; border-radius:14px; flex:none; overflow:hidden;
+    border:2px dashed #e0cbb4; background:#faf6f0; display:flex; align-items:center; justify-content:center;
+  }
+  .avatar img{ width:100%; height:100%; object-fit:cover; }
+  .avatar .ph{ color:#c9a87f; font-size:12px; text-align:center; line-height:1.4; padding:6px; }
+  .pinfo .name{ font-size:22px; font-weight:800; }
+  .pinfo .pno{ font-size:12px; color:#b06b3f; letter-spacing:1px; margin-bottom:2px; }
+  .pinfo .meta{ font-size:13px; color:#8a6b4c; margin-top:4px; }
+  .pinfo .tag{
+    display:inline-block; background:#fdeee5; color:#c9361a; border:1px solid #f6d3bd;
+    border-radius:999px; padding:2px 10px; font-size:12px; margin-top:8px;
+  }
+
+  /* ===== 特征列表 ===== */
+  .feats{ display:flex; flex-direction:column; gap:10px; }
+  .feat{ display:flex; gap:10px; font-size:14px; align-items:flex-start; }
+  .feat .k{
+    flex:none; min-width:56px; text-align:center; background:#f6efe6; color:#8a6b4c;
+    border-radius:6px; font-size:12px; padding:3px 6px; margin-top:1px;
+  }
+  .feat .v{ color:#3a2d1f; }
+
+  /* ===== 行动按钮 ===== */
+  .actions{ display:flex; flex-direction:column; gap:10px; }
+  .btn{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    border-radius:14px; padding:16px; text-decoration:none; font-size:17px; font-weight:700;
+    color:#fff; transition:transform .1s;
+  }
+  .btn:active{ transform:scale(.98); }
+  .btn svg{ width:20px; height:20px; }
+  .btn-main{ background:#e8532f; }
+  .btn-110{ background:#2f6bd8; }
+  .btn-120{ background:#1f9d55; }
+  .btn-row{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+
+  /* ===== 隐私提示 ===== */
+  .privacy{
+    display:flex; gap:10px; background:#fff8ee; border:1px solid #f0d9b8;
+    border-radius:12px; padding:12px 14px; font-size:12.5px; color:#8a6b4c; line-height:1.7;
+  }
+  .privacy svg{ width:18px; height:18px; flex:none; margin-top:2px; }
+
+  /* ===== 家属区 ===== */
+  .fam-hint{
+    font-size:13px; color:#8a6b4c; background:#f6efe6; border-radius:10px;
+    padding:10px 14px; margin-bottom:14px;
+  }
+  .lock{ text-align:center; padding:6px 0; }
+  .lock input{
+    width:160px; text-align:center; font-size:26px; letter-spacing:10px; font-weight:700;
+    border:2px solid #e0cbb4; border-radius:12px; padding:10px 8px; outline:none; color:#2b2118;
+  }
+  .lock input:focus{ border-color:#e8532f; }
+  .lock .hint{ font-size:12px; color:#a08465; margin-top:10px; }
+  .lockbtn{
+    display:block; margin:14px auto 0; background:#c9361a; color:#fff; border:none;
+    border-radius:12px; padding:12px 34px; font-size:16px; font-weight:700; cursor:pointer;
+  }
+  .err{ color:#d93b2b; font-size:13px; margin-top:10px; display:none; }
+
+  .sec{ display:none; }
+  .sec.open{ display:block; }
+  .info-grid{ display:flex; flex-direction:column; gap:12px; }
+  .info-item{ display:flex; gap:12px; }
+  .info-item .ic{ flex:none; width:26px; height:26px; border-radius:8px; background:#fdeee5; display:flex; align-items:center; justify-content:center; }
+  .info-item .ic svg{ width:15px; height:15px; }
+  .info-item .t{ font-size:13px; color:#a08465; }
+  .info-item .d{ font-size:14px; font-weight:600; color:#2b2118; }
+  .warn{
+    background:#fff4f1; border:1px solid #f6cfc2; color:#b23a1e; border-radius:10px;
+    padding:10px 14px; font-size:13px; margin-top:14px; line-height:1.7;
+  }
+
+  .foot{ text-align:center; font-size:11.5px; color:#a99c8b; margin-top:22px; line-height:1.8; padding:0 20px; }
+
+  /* ===== 打印（胸牌/挂牌用） ===== */
+  @media print {
+    body{ background:#fff; }
+    .wrap{ max-width:100%; padding:0; }
+    .topbar{ -webkit-print-color-adjust:exact; print-color-adjust:exact; border-radius:0; }
+    .card{ box-shadow:none; break-inside:avoid; margin:10px 0; border-radius:10px; }
+    .btn, .privacy, .fam-hint, .lock, .foot, .noprint{ display:none !important; }
+    .sec{ display:block !important; }
+    .card h2{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    @page{ margin:8mm; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===== 顶部标识 ===== -->
+  <header class="topbar">
+    <span class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      社区关怀 · 防走失
+    </span>
+    <h1>特殊人员关怀信息卡</h1>
+    <p class="sub" id="subLine">如您遇到需要帮助的人，请扫码查看救助指引</p>
+  </header>
+
+  <!-- ===== 人物信息 ===== -->
+  <section class="card">
+    <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>人员信息<span class="h2line"></span></h2>
+    <div class="person">
+      <div class="avatar" id="avatarBox">
+        <!-- 放置照片：将图片放入 assets/ 并在下方 JS 中填写路径；无照片时显示占位 -->
+        <span class="ph">照片位<br>（可替换）</span>
+      </div>
+      <div class="pinfo">
+        <div class="pno" id="pNo">关怀码编号：NO.000</div>
+        <div class="name" id="pName">人员称呼</div>
+        <div class="meta" id="pMeta">性别 · 年龄 · 社区</div>
+        <span class="tag" id="pTag">标签</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 体貌特征 ===== -->
+  <section class="card">
+    <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 3-2 5-2 5v2a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-2s-2-2-2-5a7 7 0 0 1 7-7z"/><path d="M9 21h6"/></svg>体貌与特征<span class="h2line"></span></h2>
+    <div class="feats" id="feats"></div>
+  </section>
+
+  <!-- ===== 行动按钮 ===== -->
+  <section class="card">
+    <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>发现走失，请立即联系<span class="h2line"></span></h2>
+    <div class="actions">
+      <a class="btn btn-main" id="btnHot" href="tel:0431-88888888">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"/></svg>
+        拨打社区紧急电话
+      </a>
+      <div class="btn-row">
+        <a class="btn btn-110" href="tel:110">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>110
+        </a>
+        <a class="btn btn-120" href="tel:120">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>120
+        </a>
+      </div>
+    </div>
+    <div style="height:12px"></div>
+    <div class="privacy">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <span>本卡片仅用于紧急救助。请尊重本人隐私，扫码后勿传播、勿拍照转发，发现情况请先拨打上方电话。</span>
+    </div>
+  </section>
+
+  <!-- ===== 家属专属区 ===== -->
+  <section class="card noprint">
+    <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>家属 / 看护专区<span class="h2line"></span></h2>
+    <div class="fam-hint">完整信息（病史、用药、住址、家人电话）仅限家属查看。请输入验证码解锁，防止隐私外泄。</div>
+
+    <div class="lock" id="lockBox">
+      <input id="codeInput" type="password" inputmode="numeric" maxlength="6" placeholder="验证码">
+      <div class="hint" id="codeHint"></div>
+      <button class="lockbtn" id="unlockBtn">解锁完整信息</button>
+      <div class="err" id="errMsg">验证码不正确，请重试</div>
+    </div>
+
+    <div class="sec" id="familySec">
+      <div class="info-grid" id="famGrid"></div>
+      <div class="warn" id="famWarn"></div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    主办单位：<span id="orgName">朝阳社区居民委员会</span>（示例）<br>
+    制卡时间：<span id="makeDate">2026年9月</span> · 如信息有变请及时联系社区更新
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+ * 本文件为模板：build.py 会用每位人员的数据替换 {"id": "li", "no": "002", "org": "朝阳社区居民委员会", "subLine": "如您遇到需要帮助的人，请扫码查看救助指引", "name": "李爷爷", "gender": "男", "age": "82", "addr": "朝阳社区", "tag": "重点关注对象", "phone": "0431-88888888", "photo": "", "feats": [["身高", "约170厘米"], ["体型", "微胖"], ["发色", "全白短发"], ["衣着", "常穿灰色夹克、深色长裤"], ["特征", "走路稍慢，右手拄木质拐杖"], ["习惯", "每天上午去社区公园下棋，容易走远"]], "family": {"code": "520002", "items": [["紧急联系人", "李女士（女儿） 138-0000-0002"], ["家庭住址", "朝阳社区 5 栋 1 单元 301"], ["病史", "糖尿病（二型）、冠心病"], ["用药", "每日早晚各 1 片二甲双胍 500mg；随身携带硝酸甘油"], ["饮食注意", "低糖饮食，随身需备饼干防低血糖"], ["注意事项", "独居，每周三社区上门探访"]], "warn": "温馨提示：老人如有突发不适，请立即拨打 120，并告知医护人员上述病史与用药情况。"}}
+ * ============================================================ */
+const DATA = {"id": "li", "no": "002", "org": "朝阳社区居民委员会", "subLine": "如您遇到需要帮助的人，请扫码查看救助指引", "name": "李爷爷", "gender": "男", "age": "82", "addr": "朝阳社区", "tag": "重点关注对象", "phone": "0431-88888888", "photo": "", "feats": [["身高", "约170厘米"], ["体型", "微胖"], ["发色", "全白短发"], ["衣着", "常穿灰色夹克、深色长裤"], ["特征", "走路稍慢，右手拄木质拐杖"], ["习惯", "每天上午去社区公园下棋，容易走远"]], "family": {"code": "520002", "items": [["紧急联系人", "李女士（女儿） 138-0000-0002"], ["家庭住址", "朝阳社区 5 栋 1 单元 301"], ["病史", "糖尿病（二型）、冠心病"], ["用药", "每日早晚各 1 片二甲双胍 500mg；随身携带硝酸甘油"], ["饮食注意", "低糖饮食，随身需备饼干防低血糖"], ["注意事项", "独居，每周三社区上门探访"]], "warn": "温馨提示：老人如有突发不适，请立即拨打 120，并告知医护人员上述病史与用药情况。"}};
+
+/* ===== 渲染 ===== */
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+function render(){
+  document.title = DATA.org + " · 关怀信息卡";
+  document.getElementById("subLine").textContent = DATA.subLine;
+  document.getElementById("pNo").textContent = "关怀码编号：" + (DATA.no || "NO.000");
+  document.getElementById("pName").textContent = DATA.name;
+  document.getElementById("pMeta").textContent = DATA.gender + " · " + DATA.age + "岁 · " + DATA.addr;
+  document.getElementById("pTag").textContent = DATA.tag;
+  document.getElementById("btnHot").textContent = "拨打社区紧急电话 " + DATA.phone;
+  document.getElementById("btnHot").href = "tel:" + DATA.phone.replace(/[^\d+]/g,"");
+  document.getElementById("orgName").textContent = DATA.org;
+
+  // 照片
+  if (DATA.photo) {
+    const box = document.getElementById("avatarBox");
+    box.style.border = "2px solid #e0cbb4";
+    box.innerHTML = '<img src="' + esc(DATA.photo) + '" alt="人员照片">';
+  }
+
+  // 特征
+  document.getElementById("feats").innerHTML = DATA.feats.map(f =>
+    '<div class="feat"><span class="k">' + esc(f[0]) + '</span><span class="v">' + esc(f[1]) + '</span></div>'
+  ).join("");
+
+  // 家属区
+  document.getElementById("famGrid").innerHTML = DATA.family.items.map(it =>
+    '<div class="info-item"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>' +
+    '<div><div class="t">' + esc(it[0]) + '</div><div class="d">' + esc(it[1]) + '</div></div></div>'
+  ).join("");
+  document.getElementById("famWarn").textContent = DATA.family.warn;
+  document.getElementById("codeHint").textContent = "示例验证码：" + DATA.family.code + "（部署前请修改）";
+}
+
+/* ===== 解锁 ===== */
+const lockBox = document.getElementById("lockBox");
+const familySec = document.getElementById("familySec");
+const errMsg = document.getElementById("errMsg");
+
+document.getElementById("unlockBtn").addEventListener("click", function(){
+  const val = document.getElementById("codeInput").value.trim();
+  if (val === String(DATA.family.code)) {
+    lockBox.style.display = "none";
+    familySec.classList.add("open");
+    errMsg.style.display = "none";
+  } else {
+    errMsg.style.display = "block";
+  }
+});
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+_shots/
+__pycache__/
+*.pyc
+care-qr-demo.png
+care-qr-official.png
