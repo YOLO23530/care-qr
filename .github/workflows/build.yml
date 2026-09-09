@@ -1,0 +1,38 @@
+name: build-codes
+
+# 触发时机：members.json 有变更时自动重新生成关怀码
+# 效果：你只需在网页上改 members.json 并提交，系统自动生成所有个人页与二维码并上线
+on:
+  push:
+    paths:
+      - 'members.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 安装依赖
+        run: pip install qrcode pillow
+
+      - name: 生成个人页与二维码
+        run: python3 build.py
+
+      - name: 提交生成结果
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add people/ qr/ index.html
+          git diff --cached --quiet || git commit -m "auto: 重新生成关怀码 $(date +%F)"
+          git push

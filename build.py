@@ -74,6 +74,13 @@ def main():
         raise SystemExit("template.html 缺少 __DATA_JSON__ 占位符")
     os.makedirs("people", exist_ok=True)
     os.makedirs("qr", exist_ok=True)
+    ids = {m["id"] for m in members}
+    # 清理已删除人员的旧页面与旧二维码
+    for d, ext in (("people", ".html"), ("qr", ".png")):
+        for fn in os.listdir(d):
+            if fn.endswith(ext) and fn[: -len(ext)] not in ids:
+                os.remove(os.path.join(d, fn))
+                print(f"  清理旧文件 {d}/{fn}")
     for m in members:
         if "id" not in m:
             raise SystemExit(f"成员缺少 id: {m.get('name','?')}")
