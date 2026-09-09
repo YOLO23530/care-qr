@@ -157,10 +157,12 @@
   <!-- ========== E ========== -->
   <div class="sec" id="e">
     <h2><span class="n">E</span>添加照片（可选）</h2>
-    <p>照片能让路人更快确认身份。步骤：</p>
-    <div class="step"><span class="s">1</span><div>仓库首页点 <b>Add file</b> → <b>Upload files</b>，把你准备好的照片拖进去，注意把上方路径改成 <code>assets</code> 文件夹（点 <code>/</code> 旁的 <code>assets</code> 进入后上传）。</div></div>
-    <div class="step"><span class="s">2</span><div>在 <code>members.json</code> 对应人员记录里，把 <code>"photo": ""</code> 改成 <code>"photo": "assets/照片文件名.jpg"</code>。</div></div>
-    <div class="step"><span class="s">3</span><div>提交（Commit changes），等自动生成后扫码验证。</div></div>
+    <p>照片能让路人更快确认身份。仓库里已建好 <b>assets</b> 文件夹（放照片专用）。步骤：</p>
+    <div class="step"><span class="s">1</span><div>仓库首页点击 <b>assets</b> 文件夹进入 → 点 <b>Add file</b> → <b>Upload files</b>。</div></div>
+    <div class="step"><span class="s">2</span><div>把照片文件拖进上传区域（文件名建议用人名拼音，如 <code>zhao.jpg</code>），点绿色 <b>Commit changes</b> 提交。</div></div>
+    <div class="step"><span class="s">3</span><div>打开 <code>members.json</code> 编辑，在对应人员记录里把 <code>"photo": ""</code> 改成 <code>"photo": "assets/文件名.jpg"</code>（例如 <code>"photo": "assets/zhao.jpg"</code>），提交。</div></div>
+    <div class="step"><span class="s">4</span><div>等 1～2 分钟自动更新，手机扫码即可看到照片。</div></div>
+    <div class="tip">如果哪天 <code>assets</code> 文件夹看不到了：点 <b>Add file</b> → <b>Upload files</b> → 拖入照片 → 在"Commit changes"按钮<b>上方</b>的路径输入框里输入 <code>assets</code> → 再点 Commit，文件就会自动放进 assets 文件夹。</div>
     <div class="warn">照片会公开显示，请确认本人及家属同意后再上传。建议用生活近照，正面、光线充足。</div>
   </div>
 
