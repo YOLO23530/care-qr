@@ -84,8 +84,12 @@ def main():
     for m in members:
         if "id" not in m:
             raise SystemExit(f"成员缺少 id: {m.get('name','?')}")
+        # 页面生成在 people/ 子目录，照片路径需换算为 ../assets/xxx
+        m2 = dict(m)
+        if m2.get("photo") and m2["photo"].startswith("assets/"):
+            m2["photo"] = "../" + m2["photo"]
         # 注入数据（转义 </ 防止破坏脚本标签）
-        data = json.dumps(m, ensure_ascii=False).replace("</", "<\\/")
+        data = json.dumps(m2, ensure_ascii=False).replace("</", "<\\/")
         page = tpl.replace("__DATA_JSON__", data)
         path = f"people/{m['id']}.html"
         with open(path, "w", encoding="utf-8") as f:
