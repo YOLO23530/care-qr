@@ -71,8 +71,22 @@
     <p class="sub">全程约 3 分钟，只需要复制粘贴改几个字</p>
     <div class="step"><span class="s">1</span><div>打开 <code>https://github.com/YOLO23530/care-qr</code>，点击文件列表里的 <b>members.json</b>。</div></div>
     <div class="step"><span class="s">2</span><div>点击右上角 <b>铅笔图标</b>（Edit this file），进入编辑界面。</div></div>
-    <div class="step"><span class="s">3</span><div>滚动到文件末尾，找到最后一条记录的结尾 <code>}</code> 和 <code>]</code>，在 <code>}</code> 后面加一个逗号 <code>,</code>，然后换行粘贴下面这段<b>空白模板</b>：</div></div>
-    <div class="tip">模板（整段复制）：
+    <div class="step"><span class="s">3</span><div>滚动到文件末尾。<b>关键：新记录要粘贴在最后一条记录 <code>}</code> 的下面、数组结束符 <code>]</code> 的上面</b>。先看粘贴前文件末尾长这样：</div></div>
+    <div class="tip">粘贴前（注意最后两行是 <code>}</code> 和 <code>]</code>）：
+<code style="display:block;white-space:pre;margin-top:6px;">    }
+  ]
+</code>
+在 <code>}</code> 后面加一个逗号 <code>,</code>，然后换行粘贴下面模板，最终应变成（<b>新记录必须在 <code>]</code> 的上面</b>）：
+<code style="display:block;white-space:pre;margin-top:6px;">    },
+  {
+    "id": "zhao",
+    "no": "003",
+    ...（模板内容，见下）...
+  }
+  ]
+</code>
+<b>千万不要把内容粘贴到 <code>]</code> 的下面或文件最末尾</b>——那样系统会解析失败，二维码不会生成。</div></div>
+    <div class="tip">下面是<b>空白模板</b>（整段复制，粘贴后逐项修改）：
 <code style="display:block;white-space:pre;margin-top:6px;">{
   "id": "zhao",
   "no": "003",
