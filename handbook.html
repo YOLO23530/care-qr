@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>关怀码系统 · 日常操作手册</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;background:#f5f1ea;color:#2b2118;line-height:1.75;}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 60px;}
+  .top{background:linear-gradient(135deg,#e8532f 0%,#c9361a 100%);color:#fff;padding:26px 20px 22px;margin:0 -16px 8px;}
+  .top h1{font-size:23px;letter-spacing:1px;}
+  .top p{font-size:13px;opacity:.93;margin-top:6px;}
+  .toc{background:#fff;border-radius:12px;border:1px solid rgba(80,45,20,.08);padding:14px 18px;margin:14px 0;font-size:14px;}
+  .toc b{color:#c9361a;}
+  .toc a{color:#2b2118;text-decoration:none;display:block;}
+  .sec{background:#fff;border-radius:14px;border:1px solid rgba(80,45,20,.08);padding:20px;margin:14px 0;box-shadow:0 2px 8px rgba(80,45,20,.05);}
+  .sec h2{font-size:18px;color:#c9361a;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+  .sec h2 .n{background:#c9361a;color:#fff;width:26px;height:26px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex:none;}
+  .sec .sub{font-size:13px;color:#8a6b4c;margin-bottom:12px;}
+  .sec h3{font-size:15px;margin:14px 0 6px;color:#5c3d1e;}
+  .sec p,.sec li{font-size:14px;}
+  .sec ul,.sec ol{padding-left:22px;margin:8px 0;}
+  .sec li{margin:5px 0;}
+  code,.k{background:#f6efe6;border:1px solid #ead9c3;border-radius:5px;padding:1px 6px;font-size:12.5px;font-family:Consolas,Menlo,monospace;color:#a34a22;word-break:break-all;}
+  .tip{background:#fff8ee;border:1px solid #f0d9b8;border-radius:10px;padding:10px 14px;font-size:13px;color:#8a6b4c;margin:10px 0;}
+  .warn{background:#fff4f1;border:1px solid #f6cfc2;border-radius:10px;padding:10px 14px;font-size:13px;color:#b23a1e;margin:10px 0;}
+  table{border-collapse:collapse;width:100%;font-size:13px;margin:10px 0;}
+  th,td{border:1px solid #ead9c3;padding:7px 9px;text-align:left;vertical-align:top;}
+  th{background:#fdf3e9;color:#8a5a2e;}
+  .step{display:flex;gap:10px;margin:8px 0;}
+  .step .s{flex:none;width:22px;height:22px;border-radius:50%;background:#e8532f;color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;margin-top:2px;font-weight:700;}
+  .btn-demo{display:inline-block;background:#f6efe6;border:1px solid #e0cbb4;border-radius:999px;padding:2px 12px;font-size:12.5px;color:#a34a22;}
+  .foot{text-align:center;font-size:12px;color:#a99c8b;margin-top:24px;}
+  @media print{
+    body{background:#fff;}
+    .top{border-radius:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .sec{box-shadow:none;break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <h1>社区关怀码 · 日常操作手册</h1>
+    <p>面向社区工作人员 · 全程网页操作，无需安装任何软件</p>
+  </div>
+
+  <div class="toc">
+    <b>目录</b>
+    <a href="#a">A. 新增一位人员（首次必看）</a>
+    <a href="#b">B. 修改人员信息</a>
+    <a href="#c">C. 删除人员</a>
+    <a href="#d">D. 下载 / 打印二维码</a>
+    <a href="#e">E. 添加照片（可选）</a>
+    <a href="#f">F. 字段填写说明</a>
+    <a href="#g">G. 常见问题</a>
+  </div>
+
+  <!-- ========== 前置 ========== -->
+  <div class="sec">
+    <h2><span class="n">0</span>开始之前</h2>
+    <p>你的关怀码系统已经上线，网址是 <code>https://yolo23530.github.io/care-qr/</code>。系统会自动工作：<b>你只需要修改人员名单，其余全部自动完成</b>。</p>
+    <div class="tip">操作前请先登录你的 GitHub 账号：打开 <code>github.com</code> → 右上角 <span class="btn-demo">Sign in</span>，用注册时的账号密码登录。</div>
+    <p>日常操作都在这一个网页里完成：<b>https://github.com/YOLO23530/care-qr</b></p>
+  </div>
+
+  <!-- ========== A ========== -->
+  <div class="sec" id="a">
+    <h2><span class="n">A</span>新增一位人员</h2>
+    <p class="sub">全程约 3 分钟，只需要复制粘贴改几个字</p>
+    <div class="step"><span class="s">1</span><div>打开 <code>https://github.com/YOLO23530/care-qr</code>，点击文件列表里的 <b>members.json</b>。</div></div>
+    <div class="step"><span class="s">2</span><div>点击右上角 <b>铅笔图标</b>（Edit this file），进入编辑界面。</div></div>
+    <div class="step"><span class="s">3</span><div>滚动到文件末尾，找到最后一条记录的结尾 <code>}</code> 和 <code>]</code>，在 <code>}</code> 后面加一个逗号 <code>,</code>，然后换行粘贴下面这段<b>空白模板</b>：</div></div>
+    <div class="tip">模板（整段复制）：
+<code style="display:block;white-space:pre;margin-top:6px;">{
+  "id": "zhao",
+  "no": "003",
+  "org": "朝阳社区居民委员会",
+  "subLine": "如您遇到需要帮助的人，请扫码查看救助指引",
+  "name": "赵爷爷",
+  "gender": "男",
+  "age": "75",
+  "addr": "朝阳社区",
+  "tag": "重点关注对象",
+  "phone": "0431-88888888",
+  "photo": "",
+  "feats": [
+    ["身高", "约165厘米"],
+    ["体型", "中等"],
+    ["发色", "花白短发"],
+    ["衣着", "常穿蓝色外套"],
+    ["特征", "说话声音洪亮"],
+    ["习惯", "喜欢在小区门口晒太阳"]
+  ],
+  "family": {
+    "code": "520003",
+    "items": [
+      ["紧急联系人", "赵女士（女儿） 138-0000-0003"],
+      ["家庭住址", "朝阳社区 6 栋 2 单元 101"],
+      ["病史", "无重大病史"],
+      ["用药", "无长期用药"],
+      ["饮食注意", "无特殊忌口"],
+      ["注意事项", "喜欢独自散步，注意天色"]
+    ],
+    "warn": "温馨提示：老人如有突发不适，请立即拨打 120，并告知医护人员上述病史与用药情况。"
+  }
+}</code></div>
+    <div class="step"><span class="s">4</span><div>把模板里的内容改成这位人员的真实信息：<b>id</b>（英文，如 zhao，以后别改）、<b>no</b>（编号）、<b>name</b>（称呼）、<b>family.code</b>（家属验证码）等。字段含义见 <a href="#f">第 F 节</a>。</div></div>
+    <div class="step"><span class="s">5</span><div>点绿色按钮 <b>Commit changes…</b> → 在弹窗里点 <b>Commit changes</b> 确认。系统自动开始生成，等 1～2 分钟。</div></div>
+    <div class="step"><span class="s">6</span><div>回到仓库首页，点击 <b>qr</b> 文件夹 → 找到新人员的图片（如 <b>zhao.png</b>）→ 点开 → 点 <b>Download</b> 下载，打印即可使用（见 <a href="#d">第 D 节</a>）。</div></div>
+    <div class="tip">完成！新人员的专属页面也会自动生成，网址是 <code>https://yolo23530.github.io/care-qr/people/zhao.html</code>，扫码就能验证。</div>
+  </div>
+
+  <!-- ========== B ========== -->
+  <div class="sec" id="b">
+    <h2><span class="n">B</span>修改人员信息</h2>
+    <p class="sub">电话换了、病情变了、验证码想改——都这么做</p>
+    <div class="step"><span class="s">1</span><div>打开 <code>members.json</code>，点右上角<b>铅笔图标</b>编辑。</div></div>
+    <div class="step"><span class="s">2</span><div>找到对应人员，直接改里面的内容（比如把 <code>"phone": "0431-88888888"</code> 改成新号码）。</div></div>
+    <div class="step"><span class="s">3</span><div>点 <b>Commit changes…</b> → <b>Commit changes</b>，等 1～2 分钟自动更新。</div></div>
+    <div class="tip">修改信息<b>不会改变二维码</b>——只要不改 <code>id</code>，已打印贴出的二维码依然有效，不用重新打印。改完可以用手机扫一下码确认新内容已生效。</div>
+  </div>
+
+  <!-- ========== C ========== -->
+  <div class="sec" id="c">
+    <h2><span class="n">C</span>删除人员</h2>
+    <div class="step"><span class="s">1</span><div>编辑 <code>members.json</code>，把该人员的整段记录（从 <code>{</code> 到 <code>}</code>）删掉，注意删掉后前面一条记录结尾的逗号 <code>,</code> 也要去掉，保持格式正确。</div></div>
+    <div class="step"><span class="s">2</span><div>点 <b>Commit changes…</b> → <b>Commit changes</b>。</div></div>
+    <div class="step"><span class="s">3</span><div>系统会自动删除该人员的页面和二维码文件。已打印的二维码请及时回收，避免误用。</div></div>
+  </div>
+
+  <!-- ========== D ========== -->
+  <div class="sec" id="d">
+    <h2><span class="n">D</span>下载 / 打印二维码</h2>
+    <div class="step"><span class="s">1</span><div>仓库首页点击 <b>qr</b> 文件夹，里面每位人员一个图片文件（如 <code>wang.png</code>、<code>li.png</code>）。</div></div>
+    <div class="step"><span class="s">2</span><div>点开图片 → 点 <b>Download</b> 下载原图（在电脑上点 <b>Download raw file</b> 也可以）。</div></div>
+    <div class="step"><span class="s">3</span><div>用图片软件或文档打印，<b>边长建议不小于 5 厘米</b>（约两张银行卡宽），黑白打印即可识别。</div></div>
+    <div class="step"><span class="s">4</span><div>打印后<b>塑封</b>或贴透明胶防水，做成胸牌、挂绳卡，佩戴在人员胸前或常穿衣物口袋上。</div></div>
+    <div class="tip">打印前先用手机扫码测试一次，确认能打开正确的人员页面。</div>
+  </div>
+
+  <!-- ========== E ========== -->
+  <div class="sec" id="e">
+    <h2><span class="n">E</span>添加照片（可选）</h2>
+    <p>照片能让路人更快确认身份。步骤：</p>
+    <div class="step"><span class="s">1</span><div>仓库首页点 <b>Add file</b> → <b>Upload files</b>，把你准备好的照片拖进去，注意把上方路径改成 <code>assets</code> 文件夹（点 <code>/</code> 旁的 <code>assets</code> 进入后上传）。</div></div>
+    <div class="step"><span class="s">2</span><div>在 <code>members.json</code> 对应人员记录里，把 <code>"photo": ""</code> 改成 <code>"photo": "assets/照片文件名.jpg"</code>。</div></div>
+    <div class="step"><span class="s">3</span><div>提交（Commit changes），等自动生成后扫码验证。</div></div>
+    <div class="warn">照片会公开显示，请确认本人及家属同意后再上传。建议用生活近照，正面、光线充足。</div>
+  </div>
+
+  <!-- ========== F ========== -->
+  <div class="sec" id="f">
+    <h2><span class="n">F</span>字段填写说明</h2>
+    <table>
+      <tr><th>字段</th><th>填什么</th><th>注意</th></tr>
+      <tr><td><code>id</code></td><td>英文标识，如 wang、zhao</td><td>每位人员唯一，<b>定下后不要改</b>——它决定二维码地址</td></tr>
+      <tr><td><code>no</code></td><td>编号，如 001、002</td><td>显示在卡片上，方便管理</td></tr>
+      <tr><td><code>org</code></td><td>主办单位名称</td><td>一般所有人员相同</td></tr>
+      <tr><td><code>name</code></td><td>称呼，如"王奶奶"</td><td>公开显示，建议只写称呼不写真名全名</td></tr>
+      <tr><td><code>gender/age/addr</code></td><td>性别 / 年龄 / 社区</td><td>公开显示</td></tr>
+      <tr><td><code>phone</code></td><td>社区 24 小时紧急电话</td><td>路人扫码一键拨打，务必准确</td></tr>
+      <tr><td><code>feats</code></td><td>体貌特征，每行 <code>["项目","内容"]</code></td><td>身高、衣着、特征、习惯等，越具体越易辨认</td></tr>
+      <tr><td><code>family.code</code></td><td>家属验证码（数字）</td><td>每人不相同，<b>务必修改默认值</b>，家属易记、外人难猜</td></tr>
+      <tr><td><code>family.items</code></td><td>家属信息：联系人、住址、病史、用药等</td><td>验证码解锁后可见，扫描页面的人看不到</td></tr>
+      <tr><td><code>warn</code></td><td>紧急提示语</td><td>一般不用改</td></tr>
+      <tr><td><code>photo</code></td><td>照片路径，如 assets/xx.jpg</td><td>不放照片就留 <code>""</code></td></tr>
+    </table>
+    <div class="warn">隐私提醒：本系统是公开网页，验证码和家属信息在技术上"防君子不防小人"（懂技术的人查看网页源代码能看到）。请勿填写身份证号、银行卡号等最高敏感信息；病史、住址等建议先征得本人及家属同意。</div>
+  </div>
+
+  <!-- ========== G ========== -->
+  <div class="sec" id="g">
+    <h2><span class="n">G</span>常见问题</h2>
+    <h3>改完没反应 / 页面没更新？</h3>
+    <p>确认点了 <b>Commit changes</b> 并成功提交；系统自动生成需要 1～2 分钟，稍等后刷新；仍不行就在仓库首页点 <b>Actions</b> 标签看有没有红色失败的记录。</p>
+    <h3>误删了记录 / 改坏了格式？</h3>
+    <p>编辑界面点 <b>Commit changes…</b> 旁边有 <b>…</b>，可以回退；或联系管理员用"历史版本"恢复（仓库 → 点文件 → History）。</p>
+    <h3>验证码忘了怎么办？</h3>
+    <p>打开 <code>members.json</code> 编辑，直接改 <code>family.code</code> 为新验证码，提交后自动生效。</p>
+    <h3>我想给老人换一张新二维码？</h3>
+    <p>不需要换——同一人信息更新后，旧码继续有效。只有改了 <code>id</code> 才需要重新打印。</p>
+    <h3>社区电话需要分时值班怎么办？</h3>
+    <p>可以准备两个电话：页面显示社区总机；110 / 120 按钮始终可用，路人扫码后总有一条路能联系上。</p>
+  </div>
+
+  <div class="foot">社区关怀码系统 · 操作手册 · 有问题可随时让豆包协助</div>
+</div>
+</body>
+</html>
